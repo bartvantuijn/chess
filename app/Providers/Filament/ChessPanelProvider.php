@@ -25,8 +25,12 @@ class ChessPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('chess')
-            ->path('chess')
+            ->path('')
             ->login()
+            //->registration()
+            ->passwordReset()
+            ->emailVerification()
+            ->profile(isSimple: false)
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -53,6 +57,7 @@ class ChessPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->spa();
     }
 }
