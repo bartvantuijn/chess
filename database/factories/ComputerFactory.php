@@ -1,0 +1,26 @@
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Computer>
+ */
+class ComputerFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => $this->faker->unique()->firstName(),
+            'avatar' => $this->faker->randomElement(['tim.png', 'menno.png', 'boyd.png', 'bart.png', 'hikaru.png', 'mittens.png']),
+            'rating' => $this->faker->numberBetween(250, 750),
+            'message' => $this->faker->sentence(),
+        ];
+    }
+}
