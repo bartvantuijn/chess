@@ -53,6 +53,14 @@ class GamePolicy
     }
 
     /**
+     * Determine whether the user can delete any models.
+     */
+    public function deleteAny(User $user): bool
+    {
+        return false;
+    }
+
+    /**
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, Game $game): bool

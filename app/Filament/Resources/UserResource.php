@@ -57,8 +57,7 @@ class UserResource extends Resource
                         }),
                     Tables\Columns\TextColumn::make('name')
                         ->label(__('Name'))
-                        ->sortable()
-                        ->searchable(),
+                        ->sortable(),
                     Tables\Columns\TextColumn::make('level')
                         ->label(__('Level'))
                         ->badge()
@@ -86,22 +85,21 @@ class UserResource extends Resource
                 Tables\Actions\Action::make('challenge')
                     ->label(__('Challenge'))
                     ->icon('heroicon-o-user-plus')
-                    ->requiresConfirmation()
-                    ->disabled(fn ($record) => !auth()->check() || auth()->id() === $record->id)
+                    ->disabled(function ($record) {
+                        return !auth()->check()
+                            || auth()->id() === $record->id
+                            || auth()->user()->games()->whereHasMorph('gameable', [User::class], function ($query) use ($record) {
+                                $query->where('id', $record->id)->where('status', '!=', 'completed');
+                            })->exists();
+                    })
                     ->action(function ($record) {
                         $game = auth()->user()->games()->make();
                         $game->gameable()->associate($record);
                         $game->save();
 
                         Notifications\Notification::make()
-                            ->title(__('Good luck'))
+                            ->title(__('You gave successfully challenged this player. Good luck!'))
                             ->success()
-                            ->actions([
-                                Notifications\Actions\Action::make('play')
-                                    ->label(__('Play'))
-                                    ->button()
-                                    ->url(route('filament.admin.pages.dashboard')),
-                            ])
                             ->send();
                     }),
                 Tables\Actions\EditAction::make(),

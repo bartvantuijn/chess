@@ -1,7 +1,12 @@
 $(document).ready(function () {
-    //todo: live board updaten bij $refresh
-    //todo: advantage klopt niet als je zwart bent
-    //todo: als blijkt dat status geupdate moet worden, zorgen dat goed gaat in updateGame/saveGame
+    //todo: statussen checken
+    //todo: ui verbeteren
+    //todo: openingen aanvullen (https://www.chess.com/openings)
+    //
+    //todo: bugs
+    //  - advantage doesn't correspond if you're playing black (scripts thinks black is opponent, which is actually dynamic)
+    //  - you can move with black playing an opening or computer if you're really fast
+    //  - selectGame function can trigger resetGame just before you've moved a piece, causing it to temporarily reset untill selectGame is triggerd again
 
     /*
      * A simple chess AI, by someone who doesn't know how to play chess.
@@ -16,9 +21,15 @@ $(document).ready(function () {
     var game = new Chess();
     var depth = 1; // default depth
     var globalSum = 0; // always from black's perspective. Negative for white's perspective.
-    var computerSelected = null;
-    var openingSelected = null;
-    var gameSelected = null;
+
+    let computerSelected = null;
+    let openingSelected = null;
+    let gameSelected = null;
+    let playersTurn = null;
+
+    let computerTimer = null;
+    let gameTimer = null;
+
     var whiteSquareGrey = '#a9a9a9';
     var blackSquareGrey = '#696969';
 
@@ -34,9 +45,6 @@ $(document).ready(function () {
         onSnapEnd: onSnapEnd,
     };
     board = Chessboard('board', config);
-
-    //todo: var timer van maken?
-    timer = null;
 
     /*
      * Event Listeners
@@ -67,6 +75,7 @@ $(document).ready(function () {
         console.log('computerSelected', data.computer);
 
         await resetGame(undefined, undefined, data.computer.rating);
+
         computerSelected = data.computer;
     });
 
@@ -74,16 +83,25 @@ $(document).ready(function () {
         console.log('openingSelected', data.opening);
 
         await resetGame(data.opening.orientation, data.opening.pgn, 750);
-        openingSelected = data.opening;
 
+        openingSelected = data.opening;
         window.setTimeout(() => makeBestMove(data.opening.orientation === 'black' ? 'w' : 'b'), 250);
     });
 
     Livewire.on('gameSelected', async (data) => {
-        console.log('gameSelected', data.game);
+        console.log('gameSelected', data.game, data.turn);
 
-        await resetGame(data.game.turn, data.game.pgn, undefined);
+        await resetGame(data.turn, data.game.pgn, undefined);
+
         gameSelected = data.game;
+        playersTurn = data.turn;
+
+        gameTimer = window.setTimeout(function () {
+            console.log('selectGame', gameSelected.id);
+            Livewire.dispatch('selectGame', {
+                id: gameSelected.id
+            });
+        }, 5000);
     });
 
     /*
@@ -105,7 +123,7 @@ $(document).ready(function () {
     }
 
     async function resetGame(orientation = 'white', pgn = null, rating = 250) {
-        console.log('resetGame');
+        console.log('resetGame', orientation, pgn, rating);
 
         if (rating >= 750) {
             depth = 3;
@@ -120,11 +138,18 @@ $(document).ready(function () {
         computerSelected = null;
         openingSelected = null;
         gameSelected = null;
+        playersTurn = null;
 
-        // Kill the Computer vs. Computer callback
-        if (timer) {
-            clearTimeout(timer);
-            timer = null;
+        // Kill the computer timer
+        if (computerTimer) {
+            clearTimeout(computerTimer);
+            computerTimer = null;
+        }
+
+        // Kill the game timer
+        if (gameTimer) {
+            clearTimeout(gameTimer);
+            gameTimer = null;
         }
 
         await resetBoard(orientation, pgn);
@@ -133,15 +158,13 @@ $(document).ready(function () {
 
     async function resetBoard(orientation, pgn) {
         return new Promise(resolve => {
-            console.log('resetBoard', pgn);
+            console.log('resetBoard', orientation, pgn || game.pgn());
 
             game.reset();
             game.load_pgn(pgn || game.pgn());
 
             board.orientation(orientation);
             board.position(game.fen());
-
-            console.log('boardPosition', board.position());
 
             resolve();
         });
@@ -173,15 +196,11 @@ $(document).ready(function () {
         // Update Status
         updateStatus(color);
 
+        // todo: move below to better place
         // Save Game
-        if (timer == null) {
+        if (computerTimer === null) {
             saveGame(color);
         }
-    }
-
-    function checkStatus() {
-        console.log('checkStatus', gameSelected);
-        return !!(gameSelected !== null || game.in_checkmate() || game.insufficient_material() || game.in_threefold_repetition() || game.in_stalemate() || game.in_draw());
     }
 
     function updateStatus(color = 'black') {
@@ -209,20 +228,29 @@ $(document).ready(function () {
     }
 
     function saveGame(color = 'black') {
-        console.log('saveGame', color, {computer: computerSelected, opening: openingSelected, game: gameSelected});
-
         if (color !== 'black') {
             return
         }
 
+        console.log('saveGame', color, {computer: computerSelected, opening: openingSelected, game: gameSelected, status: checkStatus(false) ? 'completed' : 'in_progress'});
         Livewire.dispatch('saveGame', {
             depth: depth,
             computer: computerSelected,
             opening: openingSelected,
             game: gameSelected,
             pgn: game.pgn(),
-            status: checkStatus() ? 'completed' : 'in_progress'
+            status: checkStatus(false) ? 'completed' : 'in_progress'
         });
+    }
+
+    //todo: improve withGameSelected
+    function checkStatus(withGameSelected = true) {
+        console.log('checkStatus', withGameSelected, gameSelected);
+        if (withGameSelected) {
+            return !!(gameSelected !== null || game.in_checkmate() || game.insufficient_material() || game.in_threefold_repetition() || game.in_stalemate() || game.in_draw());
+        }
+
+        return !!(game.in_checkmate() || game.insufficient_material() || game.in_threefold_repetition() || game.in_stalemate() || game.in_draw());
     }
 
     /*
@@ -232,7 +260,7 @@ $(document).ready(function () {
         console.log('compVsComp');
 
         if (!checkStatus()) {
-            timer = window.setTimeout(function () {
+            computerTimer = window.setTimeout(function () {
                 makeBestMove(color);
                 compVsComp(color === 'b' ? 'w' : 'b');
             }, 250);
@@ -627,8 +655,8 @@ $(document).ready(function () {
     }
 
     function isPlayersTurn() {
-        if (gameSelected === null) return true;
-        return gameSelected.turn === getPlayerColor(game.turn());
+        if (playersTurn === null) return true;
+        return playersTurn === getPlayerColor(game.turn());
     }
 
     function getPlayerColor(turn) {

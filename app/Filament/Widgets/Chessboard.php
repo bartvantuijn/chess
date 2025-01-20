@@ -10,6 +10,8 @@ use Illuminate\Contracts\View\View;
 
 class Chessboard extends Widget
 {
+    protected static ?int $sort = 2;
+
     protected int | string | array $columnSpan = 1;
 
     protected $listeners = [

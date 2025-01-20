@@ -68,8 +68,7 @@ class ComputerResource extends Resource
             ->columns([
                 //Tables\Columns\Layout\Split::make([
                     Tables\Columns\TextColumn::make('name')
-                        ->label(__('Name'))
-                        ->searchable(),
+                        ->label(__('Name')),
                     Tables\Columns\TextColumn::make('avatar')
                         ->label(__('Avatar')),
                     Tables\Columns\TextColumn::make('rating')

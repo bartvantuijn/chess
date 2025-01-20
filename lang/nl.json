@@ -13,9 +13,12 @@
     "Completed": "Voltooid",
     "Turn": "Beurt",
     "Challenge": "Uitdagen",
-    "Good luck": "Veel succes",
     "Opponent": "Tegenstander",
     "User": "Gebruiker",
+    "Good morning": "Goedemorgen",
+    "Good afternoon": "Goedemiddag",
+    "Good evening": "Goedenavond",
+    "You gave successfully challenged this player. Good luck!": "Je hebt deze speler succesvol uitgedaagd. Veel succes!",
 
     "https://github.com/Laravel-Lang/lang/blob/main/locales/nl/json.json": "https://github.com/Laravel-Lang/lang/blob/main/locales/nl/json.json",
     "(and :count more error)": "(en :count andere foutmelding)",

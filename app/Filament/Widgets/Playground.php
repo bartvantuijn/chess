@@ -11,11 +11,14 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Playground extends Widget
 {
+    protected static ?int $sort = 3;
+
     protected int | string | array $columnSpan = 1;
 
     protected $listeners = [
         'refresh' => '$refresh',
         'resetPlayground' => 'resetPlayground',
+        'selectGame' => 'selectGame',
     ];
 
     public ?Computer $computer = null;
@@ -66,7 +69,7 @@ class Playground extends Widget
         $this->computer = null;
         $this->opening = null;
         $this->game = $this->games->firstWhere('id', $id);
-        $this->dispatch('gameSelected', game: $this->game);
+        $this->dispatch('gameSelected', game: $this->game, turn: $this->game->getUserTurn());
     }
 
     public function render(): View

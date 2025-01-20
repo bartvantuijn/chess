@@ -1,7 +1,7 @@
 <x-filament-widgets::widget>
     <x-filament::section>
 
-        <div x-data="{ tab: 'tab1' }" x-init="setInterval(() => {$wire.$refresh()}, 10000)">
+        <div x-data="{ tab: 'tab1' }">
             <x-filament::tabs>
                 <x-filament::tabs.item
                     alpine-active="tab === 'tab1'"
@@ -71,7 +71,7 @@
                         </x-filament::fieldset>
                     @else
                         @foreach($openings as $opening)
-                            <x-filament::button size="xs" color="gray" wire:click="selectOpening('{{ addslashes($opening->name) }}')" :disabled="$opening->isDisabled()" outlined>
+                            <x-filament::button class="col-span-4" size="xs" color="gray" wire:click="selectOpening('{{ addslashes($opening->name) }}')" :disabled="$opening->isDisabled()" outlined>
                                 @if($opening->isDisabled())
                                     <x-filament::icon icon="heroicon-o-lock-closed" class="absolute start-1 top-1 h-3 w-3"/>
                                 @endif
@@ -101,7 +101,7 @@
                         </x-filament::fieldset>
                     @else
                         @forelse($games as $game)
-                            <x-filament::button size="xs" color="gray" wire:click="selectGame({{ $game->id }})" :disabled="$game->isDisabled()" outlined>
+                            <x-filament::button class="col-span-4" size="xs" color="gray" wire:click="selectGame({{ $game->id }})" :disabled="$game->isDisabled()" outlined>
                                 @if($game->isDisabled())
                                     <x-filament::icon icon="heroicon-o-lock-closed" class="absolute start-1 top-1 h-3 w-3"/>
                                 @endif
@@ -127,5 +127,6 @@
                 </div>
             </div>
         </div>
+
     </x-filament::section>
 </x-filament-widgets::widget>
