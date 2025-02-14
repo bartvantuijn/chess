@@ -17,11 +17,7 @@
             <div class="grid grid-flow-col gap-4">
                 <x-filament::button id="undoBtn" icon="heroicon-o-chevron-left" size="xs" color="gray" outlined></x-filament::button>
                 <x-filament::button id="compVsCompBtn" icon="heroicon-o-cpu-chip" size="xs" color="gray" outlined></x-filament::button>
-                {{--<x-filament::button id="resetBtn" icon="heroicon-o-arrow-path" size="xs" color="gray" outlined></x-filament::button>--}}
-                <x-filament::button id="resetBtn" size="xs" color="gray" outlined wire:click="resetChessboard()" wire:loading.attr="disabled">
-                    <x-heroicon-o-arrow-path color="gray" class="h-4 w-4" wire:loading.remove wire:target="resetChessboard()"/>
-                    <x-filament::loading-indicator color="gray" class="h-4 w-4" wire:loading wire:target="resetChessboard()"/>
-                </x-filament::button>
+                <x-filament::button id="resetBtn" icon="heroicon-o-arrow-path" size="xs" color="gray" wire:click="resetChessboard()" outlined></x-filament::button>
                 <x-filament::button id="redoBtn" icon="heroicon-o-chevron-right" size="xs" color="gray" outlined></x-filament::button>
             </div>
             <small id="status" class="text-center text-gray-400">No check, checkmate, or draw.</small>
