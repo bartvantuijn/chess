@@ -58,9 +58,9 @@ $(document).ready(function () {
         compVsComp('w');
     });
 
-    $('#resetBtn').on('click', async function () {
-        await resetPlayground();
-    });
+    // $('#resetBtn').on('click', async function () {
+    //     await resetPlayground();
+    // });
 
     /*
      * Livewire Event Listeners

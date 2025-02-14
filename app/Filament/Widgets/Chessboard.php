@@ -16,7 +16,13 @@ class Chessboard extends Widget
 
     protected $listeners = [
         'saveGame' => 'saveGame',
+        'resetChessboard' => 'resetChessboard',
     ];
+
+    public function resetChessboard(): void
+    {
+        $this->dispatch('resetPlayground');
+    }
 
     public function saveGame(int $depth, ?array $computer, ?array $opening, ?array $game, string $pgn, string $status): void
     {

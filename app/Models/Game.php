@@ -20,7 +20,7 @@ class Game extends Model
 
     public function getUserTurn(): string
     {
-        if ($this->user_id === auth()->id()) {
+        if ($this->user_id == auth()->id()) {
             return 'black';
         } else {
             return 'white';
@@ -29,7 +29,7 @@ class Game extends Model
 
     public function getOpponent(): string
     {
-        if ($this->user_id === auth()->id()) {
+        if ($this->user_id == auth()->id()) {
             return $this->gameable->name;
         } else {
             return $this->user->name;
@@ -38,7 +38,7 @@ class Game extends Model
 
     public function getOpponentTurn(): string
     {
-        if ($this->user_id === auth()->id()) {
+        if ($this->user_id == auth()->id()) {
             return 'white';
         } else {
             return 'black';
