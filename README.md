@@ -6,7 +6,7 @@ An online chess platform built with [Laravel][laravel] and [Filament][filament],
 
 ---
 
-> Please note that Chess is under active development
+> Please note that **Chess** is under active development
 
 ## Demo
 
