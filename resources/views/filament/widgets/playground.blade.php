@@ -26,7 +26,7 @@
                 <div class="grid grid-cols-4 gap-4" x-show="tab === 'tab1'">
                     @if ($computer)
                         <x-filament::button size="xs" color="" wire:click="resetPlayground()">
-                            <img class="rounded-full mb-2" src="{{ asset('img/chessbots/'. $computer->avatar) }}" alt="">
+                            <img class="rounded-full mb-2" src="{{ asset('images/chessbots/'. $computer->avatar) }}" alt="">
                             <p class="text-gray-400">
                                 <x-filament::icon icon="heroicon-o-sparkles" class="text-sky-500 inline-block h-3 w-3"/>
                                 {{ $computer->rating }}
@@ -44,7 +44,7 @@
                                 @if($computer->isDisabled($index))
                                     <x-filament::icon icon="heroicon-o-lock-closed" class="absolute start-1 top-1 h-3 w-3"/>
                                 @endif
-                                <img class="rounded-full mb-2" src="{{ asset('img/chessbots/'. $computer->avatar) }}" alt="">
+                                <img class="rounded-full mb-2" src="{{ asset('images/chessbots/'. $computer->avatar) }}" alt="">
                                 <p class="text-gray-400">{{ $computer->name }}</p>
                                 <p class="text-gray-400">
                                     <x-filament::icon icon="heroicon-o-sparkles" class="text-sky-500 inline-block h-3 w-3"/>
