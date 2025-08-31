@@ -28,7 +28,7 @@ class Chessboard extends Widget
     {
         $user = auth()->user();
 
-        if (!$user) {
+        if (! $user) {
             return;
         }
 
@@ -38,7 +38,7 @@ class Chessboard extends Widget
             $game->update([
                 'status' => $status,
                 'turn' => $game->getOpponentTurn(),
-                'pgn' => !empty($pgn) ? $pgn : null,
+                'pgn' => ! empty($pgn) ? $pgn : null,
             ]);
         }
 
@@ -51,7 +51,7 @@ class Chessboard extends Widget
 
             $game = $user->games()->make([
                 'status' => $status,
-                'pgn' => !empty($pgn) ? $pgn : null,
+                'pgn' => ! empty($pgn) ? $pgn : null,
             ]);
 
             $game->gameable()->associate($computer);
@@ -68,7 +68,7 @@ class Chessboard extends Widget
 
             $game = $user->games()->make([
                 'status' => 'completed',
-                'pgn' => !empty($pgn) ? $pgn : null,
+                'pgn' => ! empty($pgn) ? $pgn : null,
             ]);
 
             $game->gameable()->associate($opening);

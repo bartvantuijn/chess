@@ -3,16 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\OpeningResource\Pages;
-use App\Filament\Resources\OpeningResource\RelationManagers;
 use App\Models\Opening;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OpeningResource extends Resource
 {
@@ -74,15 +71,15 @@ class OpeningResource extends Resource
         return $table
             ->columns([
                 //Tables\Columns\Layout\Split::make([
-                    Tables\Columns\TextColumn::make('name')
-                        ->label(__('Name'))
-                        ->searchable(),
-                    Tables\Columns\TextColumn::make('orientation')
-                        ->label(__('Orientation'))
-                        ->badge()
-                        ->formatStateUsing(fn (string $state): string => __(ucfirst($state))),
-                    Tables\Columns\TextColumn::make('pgn')
-                        ->label(__('PGN')),
+                Tables\Columns\TextColumn::make('name')
+                    ->label(__('Name'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('orientation')
+                    ->label(__('Orientation'))
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state))),
+                Tables\Columns\TextColumn::make('pgn')
+                    ->label(__('PGN')),
                 //])->from('md')
             ])
             ->defaultSort('name')

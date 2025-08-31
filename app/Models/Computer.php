@@ -17,7 +17,7 @@ class Computer extends Model
 
     public function isDisabled(): bool
     {
-        if (!auth()->check() || $this->id == self::min('id')) {
+        if (! auth()->check() || $this->id == self::min('id')) {
             return false;
         }
 

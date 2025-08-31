@@ -86,7 +86,7 @@ class AppServiceProvider extends ServiceProvider
         //Register custom script data
         FilamentAsset::registerScriptData([
             'csrf_token' => csrf_token(),
-            'user' => auth()->user()
+            'user' => auth()->user(),
         ]);
     }
 }

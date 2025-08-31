@@ -22,10 +22,15 @@ class Playground extends Widget
     ];
 
     public ?Computer $computer = null;
+
     public Collection $computers;
+
     public ?Opening $opening = null;
+
     public Collection $openings;
+
     public ?Game $game = null;
+
     public Collection $games;
 
     public function mount(): void

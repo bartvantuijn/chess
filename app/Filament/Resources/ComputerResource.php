@@ -3,16 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ComputerResource\Pages;
-use App\Filament\Resources\ComputerResource\RelationManagers;
 use App\Models\Computer;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ComputerResource extends Resource
 {
@@ -67,13 +64,13 @@ class ComputerResource extends Resource
         return $table
             ->columns([
                 //Tables\Columns\Layout\Split::make([
-                    Tables\Columns\TextColumn::make('name')
-                        ->label(__('Name')),
-                    Tables\Columns\TextColumn::make('avatar')
-                        ->label(__('Avatar')),
-                    Tables\Columns\TextColumn::make('rating')
-                        ->label(__('Rating'))
-                        ->icon('heroicon-o-sparkles'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label(__('Name')),
+                Tables\Columns\TextColumn::make('avatar')
+                    ->label(__('Avatar')),
+                Tables\Columns\TextColumn::make('rating')
+                    ->label(__('Rating'))
+                    ->icon('heroicon-o-sparkles'),
                 //])->from('md')
             ])
             ->defaultSort('rating')

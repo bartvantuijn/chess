@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GameResource\Pages;
-use App\Filament\Resources\GameResource\RelationManagers;
 use App\Models\Game;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class GameResource extends Resource
 {
@@ -42,23 +39,23 @@ class GameResource extends Resource
         return $table
             ->columns([
                 //Tables\Columns\Layout\Split::make([
-                    Tables\Columns\TextColumn::make('opponent')
-                        ->label(__('Opponent'))
-                        ->getStateUsing(fn (Game $record): string => $record->getOpponent()),
-                    Tables\Columns\TextColumn::make('gameable_type')
-                        ->label(__('Type'))
-                        ->formatStateUsing(fn (string $state): string => __(class_basename($state))),
-                    Tables\Columns\TextColumn::make('status')
-                        ->label(__('Status'))
-                        ->badge()
-                        ->formatStateUsing(fn(string $state): string => __(str_replace('_', ' ', ucfirst($state)))),
-                    Tables\Columns\TextColumn::make('turn')
-                        ->label(__('Turn'))
-                        ->badge()
-                        ->formatStateUsing(fn(string $state): string => __(ucfirst($state))),
-                    Tables\Columns\TextColumn::make('pgn')
-                        ->label(__('PGN'))
-                        ->wrap()
+                Tables\Columns\TextColumn::make('opponent')
+                    ->label(__('Opponent'))
+                    ->getStateUsing(fn (Game $record): string => $record->getOpponent()),
+                Tables\Columns\TextColumn::make('gameable_type')
+                    ->label(__('Type'))
+                    ->formatStateUsing(fn (string $state): string => __(class_basename($state))),
+                Tables\Columns\TextColumn::make('status')
+                    ->label(__('Status'))
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => __(str_replace('_', ' ', ucfirst($state)))),
+                Tables\Columns\TextColumn::make('turn')
+                    ->label(__('Turn'))
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state))),
+                Tables\Columns\TextColumn::make('pgn')
+                    ->label(__('PGN'))
+                    ->wrap(),
                 //])->from('md')
             ])
             ->filters([
