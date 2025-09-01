@@ -85,11 +85,11 @@ class UserResource extends Resource
                     ->disabled(function ($record) {
                         return ! auth()->check()
                             || auth()->id() === $record->id
-                            || auth()->user()->games()->whereHasMorph('gameable', [User::class], function ($query) use ($record) {
+                            || auth()->user()->games()->whereHasMorph('gameable', [User::class], function ($query) use ($record): void {
                                 $query->where('id', $record->id)->where('status', '!=', 'completed');
                             })->exists();
                     })
-                    ->action(function ($record) {
+                    ->action(function ($record): void {
                         $game = auth()->user()->games()->make();
                         $game->gameable()->associate($record);
                         $game->save();

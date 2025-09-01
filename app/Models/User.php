@@ -14,6 +14,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
+
     use Notifiable;
 
     /**
@@ -95,7 +96,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         }
 
         $this->experience = $experience;
-        $this->coins = $this->coins + ($depth * 10);
+        $this->coins += $depth * 10;
         $this->save();
     }
 }

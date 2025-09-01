@@ -38,8 +38,8 @@ class Playground extends Widget
         $this->computers = Computer::all();
         $this->openings = Opening::all();
 
-        $this->games = Game::where(function ($query) {
-            $query->where('user_id', auth()->id())->orWhereHas('gameable', function ($query) {
+        $this->games = Game::where(function ($query): void {
+            $query->where('user_id', auth()->id())->orWhereHas('gameable', function ($query): void {
                 $query->where('id', auth()->id());
             });
         })->where('status', '!=', 'completed')->get();

@@ -21,7 +21,7 @@ class Computer extends Model
             return false;
         }
 
-        return auth()->user()->games()->whereHasMorph('gameable', [self::class], function ($query) {
+        return auth()->user()->games()->whereHasMorph('gameable', [self::class], function ($query): void {
             $query->where('id', $this->id - 1);
         })->doesntExist();
     }
