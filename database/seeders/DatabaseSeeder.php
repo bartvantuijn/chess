@@ -270,10 +270,9 @@ class DatabaseSeeder extends Seeder
 
         // Users
         User::factory()->create([
-            'name' => 'Venton',
+            'name' => 'Test User',
             'role' => 'admin',
-            'email' => 'development@venton.systems',
-            'password' => Hash::make('GQ2VPZnPwFCc-zADF4Ht8M9tN.'),
+            'email' => 'test@example.com',
         ]);
     }
 }

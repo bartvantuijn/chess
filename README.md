@@ -19,7 +19,7 @@ Clone this repository and install dependencies:
 ```bash
 git clone https://github.com/bartvantuijn/chess.git
 cd chess
-composer install
+composer install --no-scripts
 npm install && npm run build
 ```
 
@@ -32,18 +32,10 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-Update `.env` with your database and mail configuration before continuing.
-
 Run migrations:
 
 ```bash
 php artisan migrate
-```
-
-Create an initial admin user:
-
-```bash
-php artisan make:filament-user
 ```
 
 Start the app:
@@ -52,11 +44,28 @@ Start the app:
 php artisan serve
 ```
 
+Access the application:
+
+```
+http://127.0.0.1:8000
+```
+
+If you want seeded demo data, run:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+The seeder will create demo computers, openings and a test user:
+
+- **E-mail**: test@example.com
+- **Password**: password
+
 ---
 
 ### License
 
-Noton is licensed under the _Functional Source License, Version 1.1_. It's free to use for
+Chess is licensed under the _Functional Source License, Version 1.1_. It's free to use for
 internal and non-commercial purposes, but it's not allowed to use a release for commercial purposes (competing use). See our [full license][license] for more details.
 
 ### Contributing
