@@ -58,7 +58,7 @@ php artisan migrate:fresh --seed
 
 The seeder will create demo computers, openings and a test user:
 
-- **E-mail**: test@example.com
+- **Email**: test@example.com
 - **Password**: password
 
 ---
