@@ -4,6 +4,12 @@
     "description": "An online chess platform built with Laravel and Filament, featuring multiplayer games, computer opponents, openings, leveling, and leaderboards.",
     "keywords": ["chess", "laravel", "filament"],
     "license": "FSL-1.1",
+    "authors": [
+        {
+            "name": "Bart van Tuijn",
+            "email": "bart@bartvantuijn.nl"
+        }
+    ],
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.2",
